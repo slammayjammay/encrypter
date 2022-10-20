@@ -1,0 +1,13 @@
+{
+  "name": "encrypter",
+  "version": "1.0.0",
+  "description": "A simple SubtleCrypto implementation.",
+  "type": "module",
+  "main": "Encrypter.js",
+  "keywords": [],
+  "author": {
+    "name": "Scott McKenzie",
+    "email": "slammayjammay@gmail.com"
+  },
+  "license": "ISC"
+}
