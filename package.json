@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simple SubtleCrypto implementation.",
   "type": "module",
-  "main": "Encrypter.js",
+  "main": "index.js",
   "keywords": [],
   "author": {
     "name": "Scott McKenzie",
