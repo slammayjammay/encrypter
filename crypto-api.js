@@ -75,15 +75,22 @@ export const toHex = (iv, salt, cipher) => {
 }
 
 export const parseHex = (string) => {
-	try {
-		const array = string.match(/[\da-f]{2}/gi).map(n => parseInt(n, 16));
-
-		return [null, {
-			iv: arrayToTyped(array.slice(0, ivLength)),
-			salt: arrayToTyped(array.slice(ivLength, ivLength + saltLength)),
-			cipher: arrayToTyped(array.slice(ivLength + saltLength))
-		}];
-	} catch(e) {
-		return [e];
+	const match = string.match(/[\da-f]{2}/gi);
+	if (!match) {
+		throw new Error('String is not made of hex values.');
 	}
+
+	return match.map(n => parseInt(n, 16));
+
+	// try {
+	// 	const array = string.match(/[\da-f]{2}/gi).map(n => parseInt(n, 16));
+
+	// 	return [null, {
+	// 		iv: arrayToTyped(array.slice(0, ivLength)),
+	// 		salt: arrayToTyped(array.slice(ivLength, ivLength + saltLength)),
+	// 		cipher: arrayToTyped(array.slice(ivLength + saltLength))
+	// 	}];
+	// } catch(e) {
+	// 	return [e];
+	// }
 }
