@@ -81,16 +81,18 @@ export const parseHex = (string) => {
 	}
 
 	return match.map(n => parseInt(n, 16));
+}
 
-	// try {
-	// 	const array = string.match(/[\da-f]{2}/gi).map(n => parseInt(n, 16));
+export const toBase64 = (iv, salt, cipher) => {
+	const chars = [...iv, ...salt, ...new Uint8Array(cipher)].map(n => String.fromCharCode(n));
+	return btoa(chars.join(''));
+}
 
-	// 	return [null, {
-	// 		iv: arrayToTyped(array.slice(0, ivLength)),
-	// 		salt: arrayToTyped(array.slice(ivLength, ivLength + saltLength)),
-	// 		cipher: arrayToTyped(array.slice(ivLength + saltLength))
-	// 	}];
-	// } catch(e) {
-	// 	return [e];
-	// }
+export const parseBase64 = (string) => {
+	const array = atob(string.slice(3)).split('').map(c => c.charCodeAt(0));
+	return {
+		iv: arrayToTyped(array.slice(0, ivLength)),
+		salt: arrayToTyped(array.slice(ivLength, ivLength + saltLength)),
+		cipher: arrayToTyped(array.slice(ivLength + saltLength))
+	};
 }

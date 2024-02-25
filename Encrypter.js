@@ -7,7 +7,8 @@ export default class Encrypter {
 
 	async encrypt(string, password, _salt, crypto = this.crypto) {
 		const { iv, cipher, salt } = await cryptoApi.encryptFromPassword(crypto, string, password, _salt);
-		return `v2:${cryptoApi.toHex(iv, salt, cipher)}`;
+		const chars = [...iv, ...salt, ...new Uint8Array(cipher)].map(n => String.fromCharCode(n));
+		return `v3:${cryptoApi.toBase64(iv, salt, cipher)}`;
 	}
 
 	async decrypt(string, password, _salt, crypto = this.crypto) {
@@ -21,6 +22,10 @@ export default class Encrypter {
 	}
 
 	parse(string) {
+		if (/^v3:/.test(string)) {
+			return cryptoApi.parseBase64(string);
+		}
+
 		let array;
 		try {
 			array = cryptoApi.parseHex(string);
